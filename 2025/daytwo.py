@@ -15,8 +15,19 @@ def is_valid(product_id: str) -> bool:
     return True
 
 
-def part_one():
-    invalid_id_sum = 0
+def is_valid_p2(product_id: str) -> bool:
+    if not is_valid(product_id):
+        return False
+    for i in range(1, len(product_id)):
+        if (len(product_id) % 1 == 0
+                and product_id[:i] * (len(product_id) // i) == product_id):
+            return False
+    return True
+
+
+def day_two():
+    invalid_sum_p1 = 0
+    invalid_sum_p2 = 0
     for id_range in ranges:
         first_id, last_id = id_range.split('-')
         first = int(first_id)
@@ -25,12 +36,11 @@ def part_one():
 
         for num in nums:
             if not is_valid(str(num)):
-                invalid_id_sum += num
-    print(invalid_id_sum)
+                invalid_sum_p1 += num
+            if not is_valid_p2(str(num)):
+                invalid_sum_p2 += num
+    print(f"Part 1: {invalid_sum_p1}")
+    print(f"Part 2: {invalid_sum_p2}")
 
 
-def part_two():
-    pass
-
-
-part_one()
+day_two()
